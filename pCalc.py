@@ -33,7 +33,7 @@
           right), eg. 2 ^ 3 = 8
         - roots: available using exponent operator, as 1/n exponent is equal
           to n-th root of the number, eg. 8 ^ (1/3) = 2
-        - use of parenthesis, please note, that input of the closing
+        - use of parenthesis: please note that input of the closing
           parenthesis is required
         - Pi number: being equal to 3.141592653
 '''
