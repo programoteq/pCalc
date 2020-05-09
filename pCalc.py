@@ -473,9 +473,9 @@ class pCalc:
             else:
                 self.displayVar.set(self.displayVar.get() + key)
 
-#
-        print('OUT: self.displayVar.get(): ', self.displayVar.get())
-#
+###
+##        print('OUT: self.displayVar.get(): ', self.displayVar.get())
+###
 
 
 class CreateMenu:
