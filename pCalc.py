@@ -33,7 +33,7 @@
           right), eg. 2 ^ 3 = 8
         - roots: available using exponent operator, as 1/n exponent is equal
           to n-th root of the number, eg. 8 ^ (1/3) = 2
-        - use of parenthesis: please note that input of the closing
+        - use of parenthesis, please note, that input of the closing
           parenthesis is required
         - Pi number: being equal to 3.141592653
 '''
@@ -44,7 +44,7 @@ import tkinter.messagebox
 
 
 # pCalc Program Version Global Var
-version = '1.5'
+version = '1.51'
 
 # Float Number Result Precision Var
 floatPrecisionData = ('1', '2', '3', '4', '5', 'Full')
@@ -69,6 +69,11 @@ class pCalc:
 
         self.master.title('pCalc - v.' + version)
         master.resizable(1,0)
+        master.minsize(width=250, height=100)
+
+        self.img_icon = tk.PhotoImage(file="img/calculator-4x.png")
+        master.iconphoto(True, self.img_icon)
+        
         self.extraButtons = [('Pi', 'x^y', '(', ')', '//', 'mod')]
 
         self.digitButtons = [('7', '8', '9',   'Del', 'AC'),
@@ -180,6 +185,7 @@ class pCalc:
         master.bind('A', lambda event: self.displayFunc(event, '+'))
         master.bind('s', lambda event: self.displayFunc(event, '-'))
         master.bind('S', lambda event: self.displayFunc(event, '-'))
+        master.bind(',', lambda event: self.displayFunc(event, '.'))
         master.bind('<Escape>', lambda event: self.displayFunc(event, 'AC'))
         '''
         For convenience extended list of events associated with pressed keys.
@@ -517,36 +523,36 @@ class CreateMenu:
         self.aTop.resizable(0,0)
 
         noteb = ttk.Notebook(self.aTop, padding=(5,1,5,5))
-        notebF1 = ttk.Frame(noteb)   # first page, which would get widgets gridded into it
-        notebF2 = ttk.Frame(noteb)   # second page
-        noteb.add(notebF1, text='About')
-        noteb.add(notebF2, text='Description')
+        notebTab1 = ttk.Frame(noteb)   
+        notebTab2 = ttk.Frame(noteb)   
+        noteb.add(notebTab1, text='About')
+        noteb.add(notebTab2, text='Description')
         noteb.pack(fill='both')
 
         # ABOUT tab 
-        aLabel = tk.Label(notebF1,
+        aLabel = tk.Label(notebTab1,
                           pady=10,
                           text=f"\n\npCalc",
                           font=("Biome 20 bold"))
         aLabel.pack(fill='both')
 
-        aLabel = tk.Label(notebF1,
+        aLabel = tk.Label(notebTab1,
                           pady=10,
                           text=f"version: {version}\n",
                           font=("Biome 16"))
         aLabel.pack(fill='both')
 
-        aBut = ttk.Button(notebF1,
+        aBut = ttk.Button(notebTab1,
                           text="Close",
                           command=self.aTop.destroy)
         aBut.pack(side='bottom', pady=10)
 
         self.img_author = tk.PhotoImage(file="img/programoteq.100.png")
-        self.img_Label = tk.Label(notebF1, image=self.img_author)
+        self.img_Label = tk.Label(notebTab1, image=self.img_author)
         self.img_Label.pack(side='bottom', padx=2, pady=20)
 
         # DESCRIPTION tab 
-        textbox = tk.Text(notebF2,
+        textbox = tk.Text(notebTab2,
                           width=70,
                           height=28,
                           font=("Biome 10"),
@@ -582,10 +588,10 @@ results'
                        )
         textbox.insert(tk.END, " - Calculation Precision Setup:", ("h2"))
         textbox.insert(tk.END, 
-''' The value you specify (from 1 to 5 and FULL)
+''' The value you specify (from 1 to 5 or FULL)
    controls the number of decimal places for displayed calculation results.
    Calculation results are rounded off to the specified digit before being \
-   displayed.
+displayed.
 '''
                        )
         textbox.insert(tk.END, " - Engineering notation", ("h2"))
@@ -640,7 +646,7 @@ results'
         textbox.tag_config("h2", font=("Tahoma 10 bold"))
         textbox.config(state='disabled')
 
-        aBut = ttk.Button(notebF2,
+        aBut = ttk.Button(notebTab2,
                           text="Close",
                           command=self.aTop.destroy)
         aBut.pack(side='bottom', pady=10)
@@ -662,7 +668,7 @@ results'
         pLabel.pack(fill='x')
 
         pMsg = tk.Message(self.pTop, font=("Biome 10"), text=
-'''The value you specify (from 1 to 5 and FULL) controls the number of decimal \
+'''The value you specify (from 1 to 5 or FULL) controls the number of decimal \
 places for displayed calculation results. Calculation results are rounded off \
 to the specified digit before being displayed.
 
@@ -706,7 +712,7 @@ Keyboard shortcuts:
 
 0 - 9                                     digits
 
-.                                           period
+., ,                                         period
 
 +, a, A                                 addition operator
 
@@ -747,4 +753,5 @@ m, M                                     mod
             
 if __name__ == "__main__":
     main()
+    
     
