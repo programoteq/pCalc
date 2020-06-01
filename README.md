@@ -1,2 +1,2 @@
 # pCalc
-Scientific Calculator
+Scientific Calculator built using Python and Tkinter.
