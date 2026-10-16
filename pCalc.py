@@ -7,7 +7,7 @@
 
     Main functions:
 
-        - Natural Order of Opeartions: Calculations can be input in the same
+        - Natural Order of Operations: Calculations can be input in the same
           form as they are written, the priority sequence of the input
           calculation will be evaluated automatically according to the
           operator precedence, eg. 1 + 2 x 3 = 7.
@@ -24,12 +24,12 @@
 
     Available operators:
 
-        - basic arithmetic opertors:  addition, subtraction, multiplication
+        - basic arithmetic operators:  addition, subtraction, multiplication
           and division
         - floor division operator (integral part of the division),
           eg. 5 // 3 = 1
-        - modulus opeartor (remainder of the division), eg. 5 mod 3 = 2
-        - exponenet operator (raises the left operand to the power of the
+        - modulus operator (remainder of the division), eg. 5 mod 3 = 2
+        - exponent operator (raises the left operand to the power of the
           right), eg. 2 ^ 3 = 8
         - roots: available using exponent operator, as 1/n exponent is equal
           to n-th root of the number, eg. 8 ^ (1/3) = 2
@@ -41,7 +41,11 @@
 import tkinter as tk
 import tkinter.ttk as ttk         
 import tkinter.messagebox
+from pathlib import Path
 
+
+# Image Folder Path Var (works from any working directory)
+imgDir = Path(__file__).parent / 'img'
 
 # pCalc Program Version Global Var
 version = '1.51'
@@ -71,7 +75,7 @@ class pCalc:
         master.resizable(1,0)
         master.minsize(width=250, height=100)
 
-        self.img_icon = tk.PhotoImage(file="img/calculator-4x.png")
+        self.img_icon = tk.PhotoImage(file=imgDir / "calculator-4x.png")
         master.iconphoto(True, self.img_icon)
         
         self.extraButtons = [('Pi', 'x^y', '(', ')', '//', 'mod')]
@@ -181,6 +185,8 @@ class pCalc:
         master.bind('E', lambda event: self.displayFunc(event, 'EXP'))
         master.bind('x', lambda event: self.displayFunc(event, '*'))
         master.bind('X', lambda event: self.displayFunc(event, '*'))
+        master.bind('d', lambda event: self.displayFunc(event, '/'))
+        master.bind('D', lambda event: self.displayFunc(event, '/'))
         master.bind('a', lambda event: self.displayFunc(event, '+'))
         master.bind('A', lambda event: self.displayFunc(event, '+'))
         master.bind('s', lambda event: self.displayFunc(event, '-'))
@@ -203,7 +209,7 @@ class pCalc:
         imageFrame.grid(column=0, row=15, padx=2, pady=1, sticky='nswe')
 
         # Image 
-        self.img_author = tk.PhotoImage(file="img/programoteq.100.png")
+        self.img_author = tk.PhotoImage(file=imgDir / "programoteq.100.png")
         self.img_Label = tk.Label(imageFrame, image=self.img_author)
         self.img_Label.grid(column=0, row=0, sticky='s', padx=2, pady=2)
         imageFrame.grid_columnconfigure(0, weight=1)
@@ -217,7 +223,7 @@ class pCalc:
       
         if key != 'Ans':
             self.AnsCount = 0
-        if key not in "123456789(" and key != 'Pi':
+        if key not in "1234567890(" and key != 'Pi':
             self.equalCount = 0           
 ###
 ##        print('\nIN: self.displayVar.get(): ', self.displayVar.get())
@@ -254,7 +260,7 @@ class pCalc:
             except:
                 temp = self.displayVar.get()
                 self.displayVar.set('-ERROR-')
-                root.after(600, lambda: self.displayVar.set(temp))
+                self.master.after(600, lambda: self.displayVar.set(temp))
                 
         elif key == 'Ans':           
             if self.AnsCount > 0:
@@ -495,9 +501,9 @@ class CreateMenu:
         # Options Menu
         optionsMenu = tk.Menu(menubar, tearoff=0)
         optionsMenu.add_command(label="About...", command=self.AboutMsg)
-        optionsMenu.add_command(label="Precison Setup",
+        optionsMenu.add_command(label="Precision Setup",
                                 command=self.PrecisionFunc)
-        optionsMenu.add_command(label="Shorcuts",
+        optionsMenu.add_command(label="Shortcuts",
                                 command=lambda: self.ManualMsg(""),
                                 accelerator="F1")
         optionsMenu.add_separator()
@@ -547,7 +553,7 @@ class CreateMenu:
                           command=self.aTop.destroy)
         aBut.pack(side='bottom', pady=10)
 
-        self.img_author = tk.PhotoImage(file="img/programoteq.100.png")
+        self.img_author = tk.PhotoImage(file=imgDir / "programoteq.100.png")
         self.img_Label = tk.Label(notebTab1, image=self.img_author)
         self.img_Label.pack(side='bottom', padx=2, pady=20)
 
@@ -564,7 +570,7 @@ class CreateMenu:
 
         # Section 1
         textbox.insert(tk.END, "\nMain functions: ", ("h1"))
-        textbox.insert(tk.END, "\n\n - Natural Order of Opeartions:", ("h2"))
+        textbox.insert(tk.END, "\n\n - Natural Order of Operations:", ("h2"))
         textbox.insert(tk.END, 
 ''' Calculations can be input in the same form as 
    they are written, the priority sequence of the input calculation will be \
@@ -603,7 +609,7 @@ displayed.
 
         # Section 2
         textbox.insert(tk.END, "Available operators: ", ("h1"))
-        textbox.insert(tk.END, "\n\n - basic arithmetic opertors:", ("h2"))
+        textbox.insert(tk.END, "\n\n - basic arithmetic operators:", ("h2"))
         textbox.insert(tk.END, 
 ''' addition, subtraction, multiplication and division
 '''
@@ -613,12 +619,12 @@ displayed.
 ''' (integral part of the division), eg. 5 // 3 = 1
 '''
                        )
-        textbox.insert(tk.END, " - modulus opeartor", ("h2"))
+        textbox.insert(tk.END, " - modulus operator", ("h2"))
         textbox.insert(tk.END, 
 ''' (remainder of the division), eg. 5 mod 3 = 2
 '''
                        )
-        textbox.insert(tk.END, " - exponenet operator", ("h2"))
+        textbox.insert(tk.END, " - exponent operator", ("h2"))
         textbox.insert(tk.END, 
 ''' (raises the left operand to the power of the right),
    eg. 2 ^ 3 = 8
